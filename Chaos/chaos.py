@@ -2,41 +2,31 @@ from gtts import gTTS
 import pyautogui
 import random
 import cv2
-
 from playsound import playsound
-print("Audio or Message or Key or Mouse or video? (1/2/3/4/5): ")
-option1 = input()
+import sys
+
+option1 = sys.argv[1]
 if option1 == "1":
-    print("Play a mp3 or create a text to speach? (1/2): ")
-    option2 = input()
+    option2 = sys.argv[2]
     if option2 == "1":
-        print("What is the name of the mp3?: ")
-        mp3 = input()
-        if mp3 == '':
-            playsound('Never Gonna Give You Up Original.mp3')
-        else:
-            playsound(input)
+        playsound('Never Gonna Give You Up Original.mp3')
     if option2 == "2":
-        print("what do you wanna say?: ")
-        blabla = input()
-        tts = gTTS(text=blabla, lang='en', tld = 'ie')
+        text = sys.argv[3]
+        text = " ".join(text.split("|"))
+        tts = gTTS(text=text, lang='en', tld = 'ie')
         tts.save(r"textVoice.mp3")
         playsound('textVoice.mp3')
 if option1 == "2":
-    print("What title do you wanna display?")
-    title = input()
-    print("What Message do you wanna display?")
-    msg = input()
+    title = " ".join(sys.argv[2].split("|"))
+    msg = " ".join(sys.argv[3].split("|"))
     pyautogui.alert(title=title, text = msg)
 if option1 == "3":
-    print("what type of interaction; press, hold, (1/2): ")
-    option3 = input()
-    print("what keys if multible seperate by ',': ")
-    keys = input()
+    option2 = sys.argv[2]
+    keys = sys.argv[3]
     keys = keys.split(",")
-    if option3 == '1':
+    if option2 == '1':
         pyautogui.press(keys)
-    if option3 == '2':
+    if option2 == '2':
         for i in keys:
             pyautogui.keyDown(i)
 if option1 == "4":
@@ -64,13 +54,8 @@ if option1 == "4":
             pyautogui.click()
             pyautogui.scroll(random.rand(-15, 15))
 if option1 == '5':
-    print("What video do you want to play?")
-    vid = input()
-    if vid == "":
-        cap = cv2.VideoCapture('Chaos/Stormtrooper Hits Head(Star Wars Fail) HD.mp4')
-    else:
-        cap = cv2.VideoCapture(vid)
-    cv2.namedWindow('vid', cv2.WINDOW_AUTOSIZE)
+    cap = cv2.VideoCapture('Stormtrooper Hits Head(Star Wars Fail) HD.mp4')
+    cv2.namedWindow("vid", cv2.WINDOW_AUTOSIZE)
     while True:
         ret_val, frame = cap.read()
         if not ret_val:
