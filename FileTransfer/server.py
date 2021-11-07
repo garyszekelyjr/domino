@@ -39,9 +39,13 @@ while True:
     receiver.recv(1024)
     sender.send("Ready".encode())
     while True:
+        file_name = sender.recv(1024).decode()
+        receiver.send(file_name.encode())
+        receiver.recv(1024)
+        sender.send("Ready".encode())
         file_data = sender.recv(1024)
         file_buffer = b""
-        sender.settimeout(3)
+        sender.settimeout(1)
         while file_data:
             file_buffer = b"".join([file_buffer, file_data])
             try:

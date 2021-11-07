@@ -1,7 +1,7 @@
 import socket
-import inquirer
-import ntpath
 import os
+import ntpath
+import inquirer
 
 class Client():
     def __init__(self):
@@ -55,8 +55,13 @@ class Client():
 
     def send_file(self, file_path):
         try:
+            file_name = ntpath.basename(file_path)
+            self.sock.send(file_name.encode())
+            self.sock.recv(1024)
+            print(file_name)
             file = open(file_path, "rb")
             data = file.read()
+            file.close()
             self.sock.send(data)
             print("\033[1m" + "Success: " + "\033[0m" + "Send file\n")
             return True
@@ -87,17 +92,21 @@ class Client():
 
     def receive_file(self):
         try:
-            file_name = input("Enter name for received file: ")
-            file = open(file_name, "wb")
+            file_name = self.sock.recv(1024)
+            self.sock.send("Ready".encode())
+            file_buffer = b""
             file_data = self.sock.recv(1024)
-            self.sock.settimeout(3)
+            self.sock.settimeout(1)
             while file_data:
-                file.write(file_data)
+                file_buffer = b"".join([file_buffer, file_data])
                 try:
                     file_data = self.sock.recv(1024)
                 except socket.timeout:
                     break
             self.sock.settimeout(None)
+            file = open(file_name, "wb")
+            file.write(file_buffer)
+            file.close()
             print("\033[1m" + "Success: " + "\033[0m" + "Receive file\n")
             return True
         except Exception as e:
