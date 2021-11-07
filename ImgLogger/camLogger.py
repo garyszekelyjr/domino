@@ -2,10 +2,13 @@ import cv2
 import numpy as np
 import glob
 import re
+import sys
+
+total_frames = int(sys.argv[1]) * 15
 
 camera = cv2.VideoCapture(0)
-path = 'ImgLogger/CamImages/'
-for i in range(300):
+path = 'CamImages/'
+for i in range(total_frames):
     return_value, image = camera.read()
     cv2.imwrite(path + 'camrecord' + str(i) + '.png', image)
 del(camera)

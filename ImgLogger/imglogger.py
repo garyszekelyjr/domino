@@ -3,11 +3,12 @@ import cv2
 import numpy as np
 import glob
 import re
+import sys
 
+total_frames = int(sys.argv[1]) * 15
 
-
-path = 'ImgLogger/RecImages/'
-for i in range(100):
+path = 'RecImages/'
+for i in range(total_frames):
     img = pyautogui.screenshot()
     img = cv2.cvtColor(np.array(img),cv2.COLOR_RGB2BGR)
     cv2.imwrite(path + 'camrecord' + str(i) + '.png', img)
