@@ -1,0 +1,35 @@
+
+~~~~~~~~2021-11-06 14:50:01.059367~~~~~~~~
+Key.cmdaKey.backspace ENTER
+why is it working ^? ^S
+~~~~~~~~2021-11-06 14:50:21.069358~~~~~~~~
+^?Key.backspace
+~~~~~~~~2021-11-06 14:50:41.079282~~~~~~~~
+^" ^BKey.backspace
+~~~~~~~~2021-11-06 14:51:01.087698~~~~~~~~
+[backspace]Key.leftKey.leftKey.leftKey.leftKey.leftKey.leftKey.leftKey.leftKey.leftKey.leftKey.leftKey.backspace
+~~~~~~~~2021-11-06 14:53:21.151574~~~~~~~~
+ ENTER
+ok ok okj  ok ok ok ok oko ko ok ok ok ok Key.backspaceKey.backspaceKey.backspaceKey.backspaceKey.backspaceKey.backspaceKey.backspaceKey.backspaceKey.backspaceKey.backspaceKey.backspace
+~~~~~~~~2021-11-06 14:53:41.160563~~~~~~~~
+Key.rightKey.rightKey.rightKey.rightKey.right
+~~~~~~~~2021-11-06 14:54:01.169212~~~~~~~~
+Key.cmdc ENTER
+Key.backspaceKey.cmdv ENTER
+Key.backspaceKey.cmdv ENTER
+Key.cmdKey.backspaceKey.cmdv
+~~~~~~~~2021-11-06 14:54:21.174603~~~~~~~~
+Key.backspaceKey.backspaceKey.backspaceKey.backspaceKey.backspacerightKey.backspaceKey.backspaceKey.backspaceKey.backspaceKey.backspaceleftKey.backspaceKey.backspaceKey.backspaceKey.backspaceKey.backspaceup""""""
+~~~~~~~~2021-11-06 14:54:41.183662~~~~~~~~
+Key.cmdc ENTER
+Key.backspaceKey.backspaceKey.cmdvKey.backspaceKey.backspacedownKey.downKey.downKey.down
+~~~~~~~~2021-11-06 16:53:38.505287~~~~~~~~
+google ENTER
+
+~~~~~~~~2021-11-06 16:54:18.522008~~~~~~~~
+[backspace][backspace][backspace][backspace][backspace][backspace] down [backspace]
+~~~~~~~~2021-11-06 16:54:58.541222~~~~~~~~
+[backspace][backspace][backspace][backspace][backspace][backspace][backspace][backspace][backspace][backspace][backspace][backspace][backspace][backspace][backspace][backspace][backspace][backspace]
+~~~~~~~~2021-11-06 16:55:18.551020~~~~~~~~
+[backspace][backspace][backspace][backspace][backspace][backspace][backspace] ENTER
+second testing of the function a[backspace][backspace]ality of the porkect is[backspace]s it recording
