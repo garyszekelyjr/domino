@@ -166,4 +166,3 @@ if __name__ == "__main__":
                     client.receive_file()
                 else:
                     break
-
