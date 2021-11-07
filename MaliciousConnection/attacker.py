@@ -2,7 +2,7 @@ import os
 import socket
 import inquirer
 
-host = ""
+host = "172.31.41.57"
 port = 5588
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
