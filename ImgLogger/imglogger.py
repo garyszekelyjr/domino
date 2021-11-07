@@ -6,7 +6,7 @@ import re
 
 
 
-path = 'ImgLogger/RecImages/'
+path = 'RecImages/'
 for i in range(100):
     img = pyautogui.screenshot()
     img = cv2.cvtColor(np.array(img),cv2.COLOR_RGB2BGR)

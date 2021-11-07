@@ -4,7 +4,7 @@ import glob
 import re
 
 camera = cv2.VideoCapture(0)
-path = 'ImgLogger/CamImages/'
+path = 'CamImages/'
 for i in range(300):
     return_value, image = camera.read()
     cv2.imwrite(path + 'camrecord' + str(i) + '.png', image)

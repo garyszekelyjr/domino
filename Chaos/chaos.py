@@ -4,7 +4,7 @@ import random
 import cv2
 
 from playsound import playsound
-print("Audio or Message or Key or Mouse? (1/2/3/4): ")
+print("Audio or Message or Key or Mouse or video? (1/2/3/4/5): ")
 option1 = input()
 if option1 == "1":
     print("Play a mp3 or create a text to speach? (1/2): ")
@@ -70,13 +70,13 @@ if option1 == '5':
         cap = cv2.VideoCapture('Chaos/Stormtrooper Hits Head(Star Wars Fail) HD.mp4')
     else:
         cap = cv2.VideoCapture(vid)
-    
+    cv2.namedWindow('vid', cv2.WINDOW_AUTOSIZE)
     while True:
         ret_val, frame = cap.read()
         if not ret_val:
             break
         try:
-            cv2.imshow('Video Life2Coding', frame)
+            cv2.imshow('vid', frame)
         except:
             pass
         if cv2.waitKey(1) == 27:
