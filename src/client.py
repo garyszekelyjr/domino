@@ -24,5 +24,5 @@ def udp_client(server):
     print('{}:{} says {}'.format(*addr, data))
 
 
-server_addr = ('10.0.0.224', 4000)  # the server's  public address
+server_addr = ('', 4000)  # the server's  public address
 udp_client(server_addr)
