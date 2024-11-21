@@ -1,27 +1,27 @@
 import socket
 import struct
 
-
-def addr_to_bytes(addr):
-    return socket.inet_aton(addr[0]) + struct.pack('H', addr[1])
+from typing import Tuple
 
 
-def bytes_to_addr(addr):
-    return (socket.inet_ntoa(addr[:4]), struct.unpack('H', addr[4:])[0])
+address = ('localhost', 4000)
 
 
-def server(addr):
-    soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    soc.bind(addr)
-
-    try:
-        while True:
-            _, client_a = soc.recvfrom(1024)
-            _, client_b = soc.recvfrom(1024)
-            soc.sendto(addr_to_bytes(client_b), client_a)
-            soc.sendto(addr_to_bytes(client_a), client_b)
-    except KeyboardInterrupt:
-        pass
+def encode(address: Tuple[str, int]) -> bytes:
+    host, port = address
+    return socket.inet_aton(host) + struct.pack('H', port)
 
 
-server(('0.0.0.0', 4000))
+def server(address):
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+        try:
+            s.bind(address)
+            while True:
+                _, attacker = s.recvfrom(1)
+                _, victim = s.recvfrom(1)
+                s.sendto(encode(victim), attacker)
+        except KeyboardInterrupt:
+            pass
+
+
+server(address)
